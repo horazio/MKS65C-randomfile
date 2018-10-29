@@ -15,7 +15,10 @@ char * rando_write(int * nums, int size){
   char * path = malloc(20);
   sprintf(path, "./%d.txt", nums[0]);
   int fd = open(path,  O_WRONLY | O_CREAT, 0770);
-  write(fd, nums, size);
+  if( write(fd, nums, size)){
+    printf("\n--the file is written with no errors--\n");
+  }
+
   return path;
 }
 
@@ -33,7 +36,9 @@ int main(){
   int * nums2 = malloc(4 * size);
   int fd = open(path, O_RDONLY);
   
-  read(fd, nums2, size * 4);
+  if (read(fd, nums2, size * 4)){
+    printf("\n--the file is read with no errors--\n");
+  }
 
   printf("The next array copied back from the file is: \n");
   
