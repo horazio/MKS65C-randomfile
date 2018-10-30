@@ -8,6 +8,7 @@ int * rando_gen(int size){
   int fd = open("/dev/random", O_RDONLY);
   int * nums = malloc(size * 4);
   read(fd, nums, size * 4);
+  close(fd);
   return nums;
 }
 
@@ -18,6 +19,7 @@ char * rando_write(int * nums, int size){
   if( write(fd, nums, size)){
     printf("\n--the file is written with no errors--\n");
   }
+  close(fd);
 
   return path;
 }
@@ -35,18 +37,18 @@ int main(){
 
   int * nums2 = malloc(4 * size);
   int fd = open(path, O_RDONLY);
-  
+
   if (read(fd, nums2, size * 4)){
     printf("\n--the file is read with no errors--\n");
   }
-
+  close(fd);
   printf("The next array copied back from the file is: \n");
-  
+
   for(i = 0; i < size; i++){
     printf("nums2[%d] = %d\n",i, nums2[i]);
   }
 
-  
+
   printf("\n\n");
   free(nums);
   free(nums2);
